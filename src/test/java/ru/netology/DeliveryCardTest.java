@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -32,8 +33,8 @@ public class DeliveryCardTest {
         $("[data-test-id='name'] input").setValue("Водкин-Петров Сергей");
         $("[data-test-id='phone'] input").setValue("+79001234567");
         $("[data-test-id='agreement']").click();
-        $("button").click();
-        $(Selectors.withText("забронирована")).shouldBe(Condition.exist, Duration.ofSeconds(15));
-        $(Selectors.withText(planDate)).shouldBe(Condition.exist);
+        $("button.button").click();
+        $("[data-test-id='notification'] .notification__content").shouldHave(Condition.text("забронирована на " + planDate), Duration.ofSeconds(15)).shouldBe(Condition.visible);
+
     }
 }
